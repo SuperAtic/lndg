@@ -1,0 +1,798 @@
+{% extends "base.html" %}
+{% block title %} {{ block.super }} - Dashboard{% endblock %}
+{% block content %}
+{% load humanize %}
+
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-dashlane-rid="f3c7d6615c9884c6" data-dashlane-label="true" data-form-type="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            This week
+          </button>
+        </div>
+      </div>
+	  <!-- 1st data pills-->
+	  <div class="row">
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Capacity</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ capacity|intcomma }}</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-success text-success">
+                <i class="bi-graph-up"></i> 50.00%
+              </span>
+              <span class="text-body fs-10 ms-0">from <i class="fak fa-satoshisymbol-solidtilt me-1"></i>9,000</span -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Active Channels</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit">{{ node_info.num_active_channels }} / {{ total_channels }}</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-success text-success">
+                <i class="bi-graph-up"></i> 50.00%
+              </span>
+              <span class="text-body fs-10 ms-0">from 11</span -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Peers</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit">{{ node_info.num_peers }}</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-danger text-danger">
+                <i class="bi-graph-down"></i> 25.00%
+              </span>
+              <span class="text-body fs-10 ms-0">from 20</span-->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">DB Size</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit">{{ db_size }} GB</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-secondary text-body">0.0%</span>
+              <span class="text-body fs-10 ms-0">from 0.257 GB</span -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Wallet Balance</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ balances.total_balance|intcomma }}</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-success text-success">
+                <i class="bi-graph-up"></i> 12.5%
+              </span>
+              <span class="text-body fs-10 ms-0">from <i class="fak fa-satoshisymbol-solidtilt me-1"></i>12,366,124</span -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Confirmed Balance</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ balances.confirmed_balance|intcomma }}</h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!--span class="badge bg-soft-success text-success">
+                <i class="bi-graph-up"></i> 1.7%
+              </span>
+              <span class="text-body fs-10 ms-0">from <i class="fak fa-satoshisymbol-solidtilt me-1"></i>13,813,523</span-->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Fees Paid</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ fees_paid|intcomma }}<sup>[{{ payments_ppm|intcomma }}]</sup></h2>
+                </div>
+                <!-- End Col -->
+
+              </div>
+              <!-- End Row -->
+
+              <!-- span class="badge bg-soft-danger text-danger">
+                <i class="bi-graph-down"></i> 4.4%
+              </span>
+              <span class="text-body fs-10 ms-0">from <i class="fak fa-satoshisymbol-solidtilt me-1"></i>10,080<sup>11</sup></span>
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-6 col-lg-3 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Unconfirmed Balance</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h2 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ balances.unconfirmed_balance|intcomma }}</h2>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+
+              <!--span class="badge bg-soft-secondary text-body">0.0%</span>
+              <span class="text-body fs-10 ms-0">from <i class="fak fa-satoshisymbol-solidtilt me-1"></i>0</span-->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+      </div>
+
+	  <!-- 2nd data pills-->
+	  <div class="row">
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Completed Payments</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit">{{ total_payments }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Sats Sent</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ total_sent|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Sats Received</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ total_received|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Lifetime Routed</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit">{{ total_forwards|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Lifetime Value:</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"> <i class="bi bi-currency-bitcoin"></i>{{ total_value_forwards|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Fees Earned</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ earned|intcomma }}<br><sup>[{{ routed_ppm|intcomma }}]</sup></h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Onchain Fees</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ onchain_costs|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Percent Cost</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit">{{ percent_cost }}%</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Offchain Fees</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ total_fees|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Profit/Outbound</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ profit_per_outbound|intcomma }} <sup>{{ profit_per_outbound_real|intcomma }}</sup></h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">7-Days Outbound Utilization</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit">{{ routed_7day_percent }}%</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Inbound Liquidity</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ inbound|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Outbound Liquidity</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ outbound|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Liquidity Ratio</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit">{{ liq_ratio }}%</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Balance In Limbo</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ limbo_balance|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Unsettled Liquidity</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ unsettled|intcomma }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">Pending HTLCs</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ pending_htlc_count }}</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+
+        <div class="col-sm-4 col-lg-2 mb-1 mb-lg-3">
+          <!-- Card -->
+          <div class="card" href="#">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">EMPTY</h6>
+
+              <div class="row align-items-center gx-2 mb-1">
+                <div class="col">
+                  <h4 class="card-title text-inherit"><i class="bi bi-currency-bitcoin"></i>0,00</h4>
+                </div>
+                <!-- End Col -->
+              </div>
+              <!-- End Row -->
+            </div>
+          </div>
+          <!-- End Card -->
+        </div>
+        
+    </div>
+
+{% if active_channels %}
+            
+      <h3><a href="/channels/index">Active Channels</a></h3>
+      <div class="table-responsive">
+        <table class="table table-striped table-responsive-stack">
+          <thead class="thead-dark">
+            <tr>
+		        <th>Channel ID</th>
+		        <th>Peer Alias</th>
+		        <th>Capacity</th>
+		        <th>Outbound Liquidity</th>
+		        <th width=10%></th>
+		        <th>Inbound Liquidity</th>
+		        <th>Unsettled</th>
+		        <th>oRate</th>
+		        <th>oBase</th>
+		        <th>o7D</th>
+		        <th>i7D</th>
+		        <th>oLife</th>
+		        <th>iLife</th>
+		        <th>iRate</th>
+		        <th>iBase</th>
+		        <th title="When AR is ENABLED for the channel, keep pulling IN to the channel until its inbound liquidity falls below the iTarget%." width=4%>iTarget%</th>
+		        <th title="When AR is ENABLED it will refill the channel with outbound liquidity." width=4%>AR</th>
+            </tr>
+          </thead>
+          <tbody>
+      {% for channel in active_channels %}
+      <tr>
+        <td title="{{ channel.funding_txid }}:{{ channel.output_index }}"><a href="{{ network_links }}/{{ network }}tx/{{ channel.funding_txid }}" target="_blank">{{ channel.chan_id }}</a></td>
+        <td title="{{ channel.remote_pubkey }}"><a href="{{ graph_links }}/{{ network }}node/{{ channel.remote_pubkey }}" target="_blank">{{ channel.alias }}</a></td>
+        <td title="Uptime: {{ channel.last_update|naturaltime|slice:":-4" }}">{{ channel.capacity|intcomma }}</td>
+        <td>{{ channel.local_balance|intcomma }} ({{ channel.outbound_percent }}%)</td>
+        <td><div class="w3-orange w3-round">{% if channel.inbound_percent == 0 %}<div class="w3-container w3-round w3-blue" style="height:16px;width:100%"></div>{% elif channel.outbound_percent == 0 %}<div class="w3-container w3-round w3-orange" style="height:16px;width:100%"></div>{% else %}<div class="w3-container w3-round w3-blue" style="height:16px;width:{{ channel.outbound_percent }}%"></div>{% endif %}</div></td>
+        <td>{{ channel.remote_balance|intcomma }} ({{ channel.inbound_percent }}%)</td>
+        <td>{{ channel.unsettled_balance|intcomma }} ({{ channel.htlc_count }})</td>
+        <td {% if channel.local_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.local_fee_rate|intcomma }}</td>
+        <td {% if channel.local_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.local_base_fee|intcomma }}</td>
+        <td>{{ channel.amt_routed_out_7day|intcomma }} M ({{ channel.routed_out_7day }})</td>
+        <td>{{ channel.amt_routed_in_7day|intcomma }} M ({{ channel.routed_in_7day }})</td>
+        <td>{{ channel.amt_routed_out|intcomma }} M ({{ channel.routed_out }})</td>
+        <td>{{ channel.amt_routed_in|intcomma }} M ({{ channel.routed_in }})</td>
+        <td {% if channel.remote_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.remote_fee_rate|intcomma }}</td>
+        <td {% if channel.remote_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.remote_base_fee|intcomma }}</td>
+        <td>
+          {% if channel.auto_rebalance == True %}
+            <form action="/update_channel/" method="post">
+              {% csrf_token %}
+              <input style="text-align:center" id="target" type="number" min="0" max="100" name="target" value="{{ channel.ar_in_target }}">
+              <input type="hidden" name="chan_id" value="{{ channel.chan_id }}">
+              <input type="hidden" name="update_target" value="3">
+            </form>
+          {% else %}
+            ---
+          {% endif %}
+        </td>
+        <td>
+          <form action="/update_channel/" method="post">
+            {% csrf_token %}
+            <input type="submit" value="{% if channel.auto_rebalance == True %}Disable{% else %}Enable{% endif %}">
+            <input type="hidden" name="chan_id" value="{{ channel.chan_id }}">
+            <input type="hidden" name="update_target" value="5">
+            <input type="hidden" name="target" value="0">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+{% endif %} <!-- End of Active Channels --> 
+
+{% if inactive_channels %}
+      <h3><a href="/channels/inactive">Inactive Channels</a></h3>
+      <div class="table-responsive">
+        <table class="table table-striped table-responsive-stack">
+          <thead class="thead-dark">
+            <tr>
+		      <th>Channel ID</th>
+		      <th>Peer Alias</th>
+		      <th>Capacity</th>
+		      <th width=9%>Outbound Liquidity</th>
+		      <th width=10%></th>
+		      <th width=9%>Inbound Liquidity</th>
+		      <th width=6%>Unsettled</th>
+		      <th width=4%>oRate</th>
+		      <th width=4%>oBase</th>
+		      <th width=4%>iRate</th>
+		      <th width=4%>iBase</th>
+		      <th width=5%>Local Commit</th>
+		      <th width=5%>Local Reserve</th>
+		      <th width=5%>Downtime</th>
+		      <th width=5%>Initiated By Me</th>
+		      <th width=4%>iTarget%</th>
+		      <th width=4%>AR</th>
+            </tr>
+          </thead>
+          <tbody>
+    {% for channel in inactive_channels %}
+            </tr>
+		     <td title="{{ channel.funding_txid }}:{{ channel.output_index }}"><a href="{{ network_links }}/{{ network }}tx/{{ channel.funding_txid }}" target="_blank">{{ channel.chan_id }}</a></td>
+		      <td title="{{ channel.remote_pubkey }}"><a href="{{ graph_links }}/{{ network }}node/{{ channel.remote_pubkey }}" target="_blank">{{ channel.alias }}</a></td>
+		      <td>{{ channel.capacity|intcomma }}</td>
+		      <td>{{ channel.local_balance|intcomma }}</td>
+		      <td><div class="w3-orange w3-round">{% if channel.inbound_percent == 0 %}<div class="w3-container w3-round w3-blue" style="height:16px;width:100%"></div>{% elif channel.outbound_percent == 0 %}<div class="w3-container w3-round w3-orange" style="height:16px;width:100%"></div>{% else %}<div class="w3-container w3-round w3-blue" style="height:16px;width:{{ channel.outbound_percent }}%"></div>{% endif %}</div></td>
+		      <td>{{ channel.remote_balance|intcomma }}</td>
+		      <td>{{ channel.unsettled_balance|intcomma }}</td>
+		      <td {% if channel.local_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.local_fee_rate|intcomma }}</td>
+		      <td {% if channel.local_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.local_base_fee|intcomma }}</td>
+		      <td {% if channel.remote_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.remote_fee_rate|intcomma }}</td>
+		      <td {% if channel.remote_disabled == True %}style="background-color: #fadbd5"{% endif %}>{{ channel.remote_base_fee|intcomma }}</td>
+		      <td>{{ channel.local_commit|intcomma }}</td>
+		      <td>{{ channel.local_chan_reserve|intcomma }}</td>
+		      <td title="{{ channel.last_update }}">{{ channel.last_update|naturaltime|slice:":-4" }}</td>
+		      <td>{{ channel.initiator }}</td>
+		      <td>
+		        {% if channel.auto_rebalance == True %}
+		          <form action="/update_channel/" method="post">
+		            {% csrf_token %}
+		            <input style="text-align:center" id="target" type="number" min="0" max="100" name="target" value="{{ channel.ar_in_target }}">
+		            <input type="hidden" name="chan_id" value="{{ channel.chan_id }}">
+		            <input type="hidden" name="update_target" value="3">
+		          </form>
+		        {% else %}
+		          ---
+		        {% endif %}
+		      </td>
+		      <td>
+		        <form action="/update_channel/" method="post">
+		          {% csrf_token %}
+		          <input type="submit" value="{% if channel.auto_rebalance == True %}Disable{% else %}Enable{% endif %}">
+		          <input type="hidden" name="chan_id" value="{{ channel.chan_id }}">
+		          <input type="hidden" name="update_target" value="5">
+		          <input type="hidden" name="target" value="0">
+		        </form>
+		      </td>
+			  </tr>
+    {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+{% endif %} <!-- End of Inactive Channels --> 
+      
+{% if payments %}
+      <div class="row">
+	  	<div class="col-4">
+	  		<h3>Last 5 <a href="/payments/sent">Payments Sent</a></h3>
+     <div class="table-responsive">
+        <table class="table table-striped table-sm table-responsive-stack">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Timestamp</th>
+              <th scope="col">Hash</th>
+              <th scope="col">Value</th>
+              <th scope="col">Fee Paid</th>
+              <th scope="col">Status</th>
+              <th scope="col">Chan Out Alias</th>
+              <th scope="col">Chan Out ID</th>
+              <th scope="col">Route</th>
+              <th scope="col">Keysend</th>
+          </tr>
+          </thead>
+          <tbody>
+    {% for payment in payments %}
+    <tr>
+      <td title="{{ payment.creation_date }}">{{ payment.creation_date|naturaltime }}</td>
+      <td>{{ payment.payment_hash }}</td>
+      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ payment.value|add:"0"|intcomma }}</td>
+      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ payment.fee|intcomma }}</td>
+      <td>{% if payment.status == 1 %}In-Flight{% elif payment.status == 2 %}Succeeded{% elif payment.status == 3 %}Failed{% else %}{{ payment.status }}{% endif %}</td>
+      <td>{% if payment.status == 2 %}{{ payment.chan_out_alias }}{% else %}N/A{% endif %}</td>
+      <td>{% if payment.status == 2 %}{{ payment.chan_out }}{% else %}N/A{% endif %}</td>
+      <td>{% if payment.status == 2 %}<a href="/route?={{ payment.payment_hash }}" target="_blank">Open</a>{% else %}N/A{% endif %}</td>
+      <td title="{{ payment.message }}">{% if payment.keysend_preimage != None %}Yes{% else %}No{% endif %}</td>
+    </tr>
+    {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  	</div>
+{% endif %} <!-- End of Payments Sent --> 
+
+{% if invoices %}
+  	<div class="col-4">
+	  		<h3>Last 5 <a href="index.html#">Payments Received</a></h3>
+     <div class="table-responsive">
+        <table class="table table-striped table-sm table-responsive-stack">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Created</th>
+              <th scope="col">Received</th>
+              <th scope="col">Payment Hash</th>
+              <th scope="col">Value</th>
+              <th scope="col">Amount Paid</th>
+              <th scope="col">State</th>
+              <th scope="col">Channel In Alias</th>
+              <th scope="col">Channel In ID</th>
+              <th scope="col">Keysend</th>
+          </tr>
+          </thead>
+          <tbody>
+		    {% for invoice in invoices %}
+		    <tr>
+		      <td title="{{ invoice.creation_date }}">{{ invoice.creation_date|naturaltime }}</td>
+		      <td title="{{ invoice.settle_date }}">{% if invoice.state == 1 %}{{ invoice.settle_date|naturaltime }}{% else %}N/A{% endif %}</td>
+		      <td>{{ invoice.r_hash }}</td>
+		      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ invoice.value|add:"0"|intcomma }}</td>
+		      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{% if invoice.state == 1 %}{{ invoice.amt_paid|intcomma }}{% else %}N/A{% endif %}</td>
+		      <td>{% if invoice.state == 0 %}Open{% elif invoice.state == 1 %}Settled{% elif invoice.state == 2 %}Canceled{% else %}{{ invoice.state }}{% endif %}</td>
+		      <td>{{ invoice.chan_in_alias }}</td>
+		      <td>{{ invoice.chan_in }}</td>
+		      <td title="{{ invoice.message }}">{% if invoice.keysend_preimage != None %}Yes{% else %}No{% endif %}</td>
+		    </tr>
+		    {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  	</div>
+{% endif %} <!-- End of Payments Received --> 
+
+{% if failed_htlcs %}
+	<div class="col-4"><!-- Can we limit this table to display last 5 only? if the user like to see them all on the relative subpage -->
+	  		<h3>Last 5 <a href="index.html#">Failed HTLCs</a></h3>
+     <div class="table-responsive">
+        <table class="table table-striped table-sm table-responsive-stack">
+          <thead class="thead-dark">
+            <tr>
+		      <th>Timestamp</th>
+		      <th>Chan In ID</th>
+		      <th>Chan Out ID</th>
+		      <th>Chan In Alias</th>
+		      <th>Chan Out Alias</th>
+		      <th>Forward Amount</th>
+		      <th>Potential Fee</th>
+		      <th>HTLC Failure</th>
+		      <th>Failure Detail</th>
+          </tr>
+          </thead>
+          <tbody>
+    {% for failed_htlc in failed_htlcs %}
+		    <tr>
+		      <td title="{{ failed_htlc.timestamp }}">{{ failed_htlc.timestamp|naturaltime }}</td>
+		      <td>{{ failed_htlc.chan_id_in }}</td>
+		      <td>{{ failed_htlc.chan_id_out }}</td>
+		      <td>{{ failed_htlc.chan_in_alias }}</td>
+		      <td>{{ failed_htlc.chan_out_alias }}</td>
+		      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ failed_htlc.amount|intcomma }}</td>
+		      <td><i class="fak fa-satoshisymbol-solidtilt me-1"></i>{{ failed_htlc.missed_fee|intcomma }}</td>
+		      <td>{% if failed_htlc.wire_failure == 15 %}Temporary Channel Failure{% elif failed_htlc.wire_failure == 18 %}Unknown Next Peer{% elif failed_htlc.wire_failure == 12 %}Fee Insufficient{% else %}{{ failed_htlc.wire_failure }}{% endif %}</td>
+		      <td>{% if failed_htlc.failure_detail == 1 %}---{% elif failed_htlc.failure_detail == 5 %}HTLC Exceeds Max{% elif failed_htlc.failure_detail == 6 %}Insufficient Balance{% elif failed_htlc.failure_detail == 20 %}Invalid Keysend{% elif failed_htlc.failure_detail == 22 %}Circular Route{% else %}{{ failed_htlc.failure_detail }}{% endif %}</td>
+		    </tr>
+		    {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endif %} <!-- End of Failed HTLCs -->
+
+  	  </div>
+
+{% endblock %}

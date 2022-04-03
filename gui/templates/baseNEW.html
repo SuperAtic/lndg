@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Lite GUI web interface to analyze lnd data and manage your node with automation.">
+    <title>{% block title %}LNDg ⚡ {% endblock %}</title>
+    {% load static %}
+    {% load qr_code %}
+    <link href="{% static 'dashboard.css' %}" rel="stylesheet" type="text/css">
+
+    <link href="{% static 'js/dashboard.js' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'js/feather.min.js' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap core CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- SatSymbol .com Font <i class="fak fa-satoshisymbol-solid"> --> 
+	<script src="https://kit.fontawesome.com/090ca49637.js" crossorigin="anonymous"></script>
+
+    <!-- Favicons -->
+	<link rel="icon" type="image/svg+xml" href="{% static 'favicon/favicon.svg' %}">
+	<link rel="icon" type="image/png" href="{% static 'favicon/favicon.png' %}">
+	
+	<!-- Bootstrap icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <!-- Custom styles for this template -->
+    <link href="asset/dashboard.css" rel="stylesheet">
+
+</head>
+
+  <body>
+    
+	<header class="navbar navbar-dark sticky-top bg-lndg flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/"><img src="{% static 'LNDg_00.svg' %}" alt="LNDg_00" alt="LNDg" title="LNDg" height="23" width="23"> <b>LNDg</b></a>
+  <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  	<link id="dark-theme-style" rel="stylesheet" />
+
+	<ul class="navbar-nav flex-row ms-md-auto me-3">
+        <li class="nav-item col-md-auto">
+          <a class="nav-link p-2" href="#" alt="Logs" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Copy Node Public Address">
+	          <i class="bi bi-files" aria-label="Copy Node ID"></i>
+          </a>
+        </li>
+        <li class="nav-item col-md-auto">
+          <a class="nav-link p-2" href="#" alt="Logs" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Copy Node Public Key">
+	          <i class="bi bi-files" aria-label="Copy Node ID"></i>
+          </a>
+        </li>
+        <li class="nav-item d-none d-md-block col-md-auto">
+          <a class="nav-link p-2" href="/{{ graph_links }}/{{ network }}node/{{ node_info.identity_pubkey }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Your Node ID or Alias">{{ node_info.alias }}</a>
+        </li>
+        <li class="nav-item col-md-auto">
+          <a class="nav-link p-2" href="/logs/index" alt="Logs" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Logs">
+	          <i class="bi bi-card-list" aria-label="Logs"></i>
+          </a>
+        </li>
+        <li class="nav-item col-md-auto">
+          <a class="nav-link p-2" href="/settings/index" alt="Settings" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Settings">
+	          <i class="bi bi-sliders" aria-label="Settings"></i>
+          </a>
+        </li>
+        <!-- li class="nav-item col-md-auto">
+          <a href="javascript:void()" class="nav-link p-2" id="theme-toggler" onclick="toggleTheme()" alt="Switch to Dark Mode" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch to Dark Mode">
+	          <i class="bi bi-moon-stars" aria-label="Dark Mode"></i>
+          </a>
+        </li -->
+      <li class="nav-item col-6 col-md-auto me-3">
+          <a class="nav-link p-2" href="#" alt="Sign out" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign Out">
+            <i class="bi bi-box-arrow-in-right" aria-label="Sign Out"></i>
+          </a>
+        </li>
+     </ul>
+     
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="bi bi-speedometer2" aria-label="Dashboard"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/rebalancer/index">
+              <i class="bi bi-robot" aria-label="Rebalancer"></i> Rebalancer
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/performances/index">
+              <i class="bi bi-bar-chart-line" aria-label="Reports"></i> Performance
+            </a>
+          </li>
+          <li class="nav-item">
+	        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#channels-collapse" aria-expanded="true">
+	          <i class="bi bi-cpu" aria-label="Channels"></i> Channels
+	        </button>
+	        <div class="collapse show" id="channels-collapse" style="">
+	          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+	            <li><a href="/channels/index" class="link-dark rounded"><i class="bi bi-dot" alt="Connect New Channel"></i> Active</a></li>
+	            <li><a href="/channels/new" class="link-dark rounded"><i class="bi bi-dot" alt="Connect New Channel"></i> Open New</a></li>
+	            <li><a href="/channels/suggested" class="link-dark rounded"><i class="bi bi-dot" alt="Suggested Channels"></i> Suggested</a></li>
+	            <li><a href="/channels/inactive" class="link-dark rounded"><i class="bi bi-dot" alt="Inactive Channel"></i> Inactive</a></li>
+	            <li><a href="/channels/close" class="link-dark rounded"><i class="bi bi-dot" alt="Close Channel"></i> Close</a></li>
+	          </ul>
+	        </div>
+		  </li>
+          <li class="nav-item">
+	        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#peers-collapse" aria-expanded="true">
+	          <i class="bi bi-diagram-3-fill" aria-label="Peers"></i> Peers
+	        </button>
+	        <div class="collapse show" id="peers-collapse" style="">
+	          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+	            <li><a href="/peers/index" class="link-dark rounded"><i class="bi bi-dot" alt="Connect New Channel"></i> Active</a></li>
+	            <li><a href="/peers/new" class="link-dark rounded"><i class="bi bi-dot" alt="Connect New Peer"></i> Connect New</a></li>
+	            <li><a href="/peers/suggested" class="link-dark rounded"><i class="bi bi-dot" alt="Suggested New Peers"></i> Suggested New</a></li>
+	          </ul>
+	        </div>
+		  </li>
+          <li class="nav-item">
+	        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#payments-collapse" aria-expanded="true">
+	          <i class="bi bi-bag-check" aria-label="Payments"></i> Payments
+	        </button>
+	        <div class="collapse show" id="payments-collapse" style="">
+	          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+	            <li><a href="/payments/balance" class="link-dark rounded"><i class="bi bi-dot" alt="Create Wallet"></i> Node Wallets</a></li>
+	            <li><a href="/payments/wallet" class="link-dark rounded"><i class="bi bi-dot" alt="Create Wallet"></i> Create Wallet</a></li>
+	            <li><a href="/payments/invoice" class="link-dark rounded"><i class="bi bi-dot" alt="Create Invoice"></i> Create Invoice</a></li>
+	            <li><a href="/payments/sent" class="link-dark rounded"><i class="bi bi-dot" alt="Payments Sent"></i> Sent</a></li>
+	            <li><a href="/payments/received" class="link-dark rounded"><i class="bi bi-dot" alt="Payments Received"></i> Received</a></li>
+	            <li><a href="/payments/failed" class="link-dark rounded"><i class="bi bi-dot" alt="Payments Failed"></i> Failed</a></li>
+	          </ul>
+	        </div>
+		  </li>
+        </ul>
+
+      </div>
+
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+
+        {% block content %}{% endblock %}
+
+         {% if messages %}
+<div class="alert alert-warning" role="alert">
+          {% for message in messages %}
+            {{ message.message }}
+            {% if message.message|slice:":17" == "Deposit Address: " or message.message|slice:":17" == "Invoice created! " %}{% qr_from_text message.message|slice:"17:" size="s" image_format="png" error_correction="L" %}{% endif %}
+          {% endfor %}
+		  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+        {% endif %}
+      
+    </main>
+  </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link href="{% static 'js/dashboard.js' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'js/feather.min.js' %}" rel="stylesheet" type="text/css">
+
+		<script>
+			var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+			var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+			  return new bootstrap.Tooltip(tooltipTriggerEl)
+			})
+		</script>
+
+      <script>
+
+     /* Responsive Tables from https://codepen.io/JacobLett/pen/mBQoOj currently not showing the tr on mobile view - muct be fixed asap */
+     
+$(document).ready(function () {
+   // inspired by http://jsfiddle.net/arunpjohny/564Lxosz/1/
+   $(".table-responsive-stack").each(function (i) {
+      var id = $(this).attr("id");
+      //alert(id);
+      $(this)
+         .find("th")
+         .each(function (i) {
+            $("#" + id + " td:nth-child(" + (i + 1) + ")").prepend(
+               '<span class="table-responsive-stack-thead">' +
+                  $(this).text() +
+                  ":</span> "
+            );
+            $(".table-responsive-stack-thead").hide();
+         });
+   });
+
+   $(".table-responsive-stack").each(function () {
+      var thCount = $(this).find("th").length;
+      var rowGrow = 100 / thCount + "%";
+      //console.log(rowGrow);
+      $(this).find("th, td").css("flex-basis", rowGrow);
+   });
+
+   function flexTable() {
+      if ($(window).width() < 768) {
+         $(".table-responsive-stack").each(function (i) {
+            $(this).find(".table-responsive-stack-thead").show();
+            $(this).find("thead").hide();
+         });
+
+         // window is less than 768px
+      } else {
+         $(".table-responsive-stack").each(function (i) {
+            $(this).find(".table-responsive-stack-thead").hide();
+            $(this).find("thead").show();
+         });
+      }
+      // flextable
+   }
+
+   flexTable();
+
+   window.onresize = function (event) {
+      flexTable();
+   };
+
+   // document ready
+});
+      </script>
+ 
+ <!-- Saber Feedback button -->
+<script type="text/javascript">
+  (function(){
+    window.Saber={
+        apiKey: "61a32a282dcb651ddd3b",
+        com:[],do:function(){this.com.push(arguments)}
+    };
+    var e = document.createElement("script");
+    e.setAttribute("type", "text/javascript");
+    e.setAttribute("src", "https://widget.saberfeedback.com/v2/widget.js");
+    document.getElementsByTagName("head")[0].appendChild(e);
+  })();
+</script>
+<!-- End of Saber Feedback button -->
+
+     
+  </body>
+</html>

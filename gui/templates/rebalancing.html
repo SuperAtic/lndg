@@ -6,7 +6,7 @@
 <div class="w3-container w3-padding-small">
   <h2>Channel Rebalancing (currently scheduling {{ eligible_count }} of {{ enabled_count }} enabled channels for rebalancing)</h2>
   <div class="w3-container w3-padding-small" style="overflow-x: scroll">
-    <table class="w3-table-all w3-centered w3-hoverable">
+    <table class="shortable w3-table-all w3-centered w3-hoverable">
       <tr>
         <th>Channel ID</th>
         <th>Peer Alias</th>
@@ -95,7 +95,7 @@
 {% if rebalancer %}
 <div class="w3-container w3-padding-small">
   <h2>Last 20 Rebalance Requests</h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Requested</th>
       <th>Start</th>
@@ -131,7 +131,7 @@
 {% if local_settings %}
 <div class="w3-container w3-padding-small">
   <h2>Auto-Rebalancer Settings</h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Key</th>
       <th>Value</th>

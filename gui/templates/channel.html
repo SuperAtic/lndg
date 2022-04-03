@@ -32,7 +32,7 @@
 </div>
 <div class="w3-container w3-padding-small" style="overflow-x: scroll">
   <h2>Channel Settings</h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>AF</th>
       <th>Updated</th>
@@ -152,7 +152,7 @@
 {% if outgoing_htlcs %}
 <div class="w3-container w3-padding-small">
   <h2>Outgoing HTLCs</h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Forwarding Channel</th>
       <th>Forwarding Alias</th>
@@ -175,7 +175,7 @@
 {% if incoming_htlcs %}
 <div class="w3-container w3-padding-small">
   <h2>Incoming HTLCs</h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Forwarding Channel</th>
       <th>Forwarding Alias</th>
@@ -198,7 +198,7 @@
 {% if forwards %}
 <div class="w3-container w3-padding-small">
   <h2>Last 5  <a href="/forwards" target="_blank">Payments Routed</a></h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Timestamp</th>
       <th>Amount In</th>
@@ -229,7 +229,7 @@
 {% if rebalances %}
 <div class="w3-container w3-padding-small">
   <h2>Last 5 <a href="/rebalancing" target="_blank">Rebalance Requests</a></h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Requested</th>
       <th>Start</th>
@@ -260,7 +260,7 @@
 {% if payments %}
 <div class="w3-container w3-padding-small">
   <h2>Last 5 <a href="/payments" target="_blank">Payments Sent</a></h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Timestamp</th>
       <th width=28%>Hash</th>
@@ -293,7 +293,7 @@
 {% if invoices %}
 <div class="w3-container w3-padding-small">
   <h2>Last 5 <a href="/invoices" target="_blank">Payments Received</a></h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Created</th>
       <th>Settled</th>
@@ -324,7 +324,7 @@
 {% if failed_htlcs %}
 <div class="w3-container w3-padding-small">
   <h2>Last 5 <a href="/failed_htlcs" target="_blank">Failed HTLCs</a></h2>
-  <table class="w3-table-all w3-centered w3-hoverable">
+  <table class="shortable w3-table-all w3-centered w3-hoverable">
     <tr>
       <th>Timestamp</th>
       <th>Chan In ID</th>
